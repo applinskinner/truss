@@ -9,12 +9,17 @@ VERSION_DATE := $(shell $(MAKEFILE_PATH)/commit_date.sh)
 default: truss
 
 dependencies:
-	go get github.com/golang/protobuf/protoc-gen-go
-	go get github.com/golang/protobuf/proto
+	go get github.com/gogo/protobuf/proto
+	go get github.com/gogo/protobuf/jsonpb
+	go get github.com/gogo/protobuf/gogoproto
+	go get github.com/gogo/protobuf/protoc-gen-gogofast
 	go get github.com/jteeuwen/go-bindata/...
 
 update-dependencies:
-	go get -u github.com/golang/protobuf/protoc-gen-go
+	go get -u github.com/gogo/protobuf/proto
+	go get -u github.com/gogo/protobuf/jsonpb
+	go get -u github.com/gogo/protobuf/gogoproto
+	go get -u github.com/gogo/protobuf/protoc-gen-gogofast
 	go get -u github.com/golang/protobuf/proto
 	go get -u github.com/jteeuwen/go-bindata/...
 

@@ -9,9 +9,8 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/pkg/errors"
 
-	gogen "github.com/golang/protobuf/protoc-gen-go/generator"
-
 	"github.com/TuneLab/truss/deftree/svcparse"
+	gogen "github.com/gogo/protobuf/protoc-gen-gogo/generator"
 )
 
 type optional interface {

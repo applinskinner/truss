@@ -17,7 +17,7 @@ import (
 	pb "github.com/TuneLab/truss/cmd/_integration-tests/transport/transportpermutations-service"
 	httpclient "github.com/TuneLab/truss/cmd/_integration-tests/transport/transportpermutations-service/svc/client/http"
 
-	"github.com/golang/protobuf/jsonpb"
+	"github.com/gogo/protobuf/jsonpb"
 	"github.com/pkg/errors"
 )
 
