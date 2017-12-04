@@ -23,8 +23,14 @@ package handlers
 import (
 	"context"
 
+	"google.golang.org/grpc"
+	
 	pb "{{.PBImportPath -}}"
 )
+
+func MakeGRPCServerOptions() []grpc.ServerOption {
+	return nil
+}
 
 // NewService returns a naïve, stateless implementation of Service.
 func NewService() pb.{{GoName .Service.Name}}Server {

@@ -97,7 +97,7 @@ func Run(cfg Config) {
 		}
 
 		srv := svc.MakeGRPCServer(endpoints)
-		s := grpc.NewServer()
+		s := grpc.NewServer(handlers.MakeGRPCServerOptions()...)
 		pb.Register{{.Service.Name}}Server(s, srv)
 
 		errc <- s.Serve(ln)
