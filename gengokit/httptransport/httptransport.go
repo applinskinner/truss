@@ -12,7 +12,7 @@ import (
 	"unicode"
 
 	log "github.com/Sirupsen/logrus"
-	gogen "github.com/golang/protobuf/protoc-gen-go/generator"
+	gogen "github.com/gogo/protobuf/protoc-gen-gogo/generator"
 	"github.com/pkg/errors"
 
 	"github.com/TuneLab/truss/gengokit/httptransport/templates"
@@ -23,9 +23,9 @@ import (
 // information necessary to correctly template the HTTP transport functionality
 // of a service. Helper must be built from a Svcdef.
 type Helper struct {
-	Methods           []*Method
-	ServerTemplate    func(interface{}) (string, error)
-	ClientTemplate    func(interface{}) (string, error)
+	Methods        []*Method
+	ServerTemplate func(interface{}) (string, error)
+	ClientTemplate func(interface{}) (string, error)
 }
 
 // NewHelper builds a helper struct from a service declaration. The other
@@ -35,8 +35,8 @@ func NewHelper(svc *svcdef.Service) *Helper {
 	// The HTTPAssistFuncs global is a group of function literals defined
 	// within templates.go
 	rv := Helper{
-		ServerTemplate:    GenServerTemplate,
-		ClientTemplate:    GenClientTemplate,
+		ServerTemplate: GenServerTemplate,
+		ClientTemplate: GenClientTemplate,
 	}
 	for _, meth := range svc.Methods {
 		if len(meth.Bindings) > 0 {

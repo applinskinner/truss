@@ -24,7 +24,7 @@ Otherwise [install from source.](https://github.com/google/protobuf)
 1. Install the `protoc-gen-go` package (must be in `$PATH`).
 
 	```
-	go get -u github.com/golang/protobuf/protoc-gen-go
+	go get -u github.com/gogo/protobuf/protoc-gen-gogofast
 	```
 1. Install Truss with
 

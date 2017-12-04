@@ -11,7 +11,7 @@ MAINTAINER lab@tune.com
 
 RUN apk update && apk upgrade && apk add --no-cache protobuf git
 
-RUN go version && go get -u -v github.com/golang/protobuf/protoc-gen-go
+RUN go version && go get -u -v github.com/gogo/protobuf/protoc-gen-gogofast
 
 COPY ./ $GOPATH/src/github.com/TuneLab/truss
 

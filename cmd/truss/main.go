@@ -306,7 +306,7 @@ func rewritePBGoForContext(serviceName string, pbgoPaths []string) error {
 			// Add the `newcontext "context"` import if we are on the context
 			// import line
 			if strings.Contains(line, oldContextImport) {
-				line = line + "\n\t" + newContextImport
+				line = line + "\n\timport " + newContextImport
 			}
 
 			// If we are not reading the service interface check if we need to start
