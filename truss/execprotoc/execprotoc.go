@@ -16,18 +16,24 @@ import (
 // GeneratePBDotGo creates .pb.go files from the passed protoPaths and writes
 // them to outDir.
 func GeneratePBDotGo(protoPaths, gopath []string, outDir string) error {
-	genGoCode := "--gogofaster_out=Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types," +
-		"plugins=grpc:" +
-		outDir
+	genGoCode := "--gogofaster_out=" +
+		"Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types," +
+		"Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types," +
+		"Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types," +
+		"Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types," +
+		"Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types," +
+		"plugins=grpc:" + outDir
+
+	genLogCode := "--gologfields_out=" + outDir
 
 	_, err := exec.LookPath("protoc-gen-gogofaster")
 	if err != nil {
-		return errors.Wrap(err, "cannot find protoc-gen-gogo in PATH")
+		return errors.Wrap(err, "cannot find protoc-gen-gogofaster in PATH")
 	}
 
-	err = protoc(protoPaths, gopath, genGoCode)
+	err = protoc(protoPaths, gopath, genGoCode, genLogCode)
 	if err != nil {
-		return errors.Wrap(err, "cannot exec protoc with protoc-gen-gogo")
+		return errors.Wrap(err, "cannot exec protoc with protoc-gen-gogofaster")
 	}
 
 	return nil
@@ -114,16 +120,17 @@ func getProtocOutput(protoPaths, gopath []string) ([]byte, error) {
 }
 
 // protoc executes protoc on protoPaths
-func protoc(protoPaths, gopath []string, plugin string) error {
+func protoc(protoPaths, gopath []string, plugins ...string) error {
 	var cmdArgs []string
 
 	cmdArgs = append(cmdArgs, "--proto_path="+filepath.Dir(protoPaths[0]))
+	cmdArgs = append(cmdArgs, "-I=/usr/include")
 
 	for _, gp := range gopath {
 		cmdArgs = append(cmdArgs, "-I"+filepath.Join(gp, "src"))
 	}
 
-	cmdArgs = append(cmdArgs, plugin)
+	cmdArgs = append(cmdArgs, plugins...)
 	// Append each definition file path to the end of that command args
 	cmdArgs = append(cmdArgs, protoPaths...)
 
